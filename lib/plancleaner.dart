@@ -511,7 +511,7 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
 
                       decoration: BoxDecoration( color: Color(0xff5C4DB1),borderRadius: BorderRadius.circular(10)),
                       child: MaterialButton(onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => Calender()));
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Calender()));
                       },child: Text("Go To Calender Screen  ",style: TextStyle(color: Colors.white)),
                       ),
                     ),
