@@ -26,7 +26,7 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(25.0),
               child: Text("Your Plan",
                   style: TextStyle(
                       color: Colors.white,
@@ -43,7 +43,7 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 35.0, left: 40),
+                      padding: const EdgeInsets.only(top: 20.0, left: 40),
                       child: Align(
                           alignment: Alignment.topLeft,
                           child: Text(
@@ -508,7 +508,6 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                     ),
 
                     Container(
-
                       decoration: BoxDecoration( color: Color(0xff5C4DB1),borderRadius: BorderRadius.circular(10)),
                       child: MaterialButton(onPressed: (){
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Calender()));
@@ -524,5 +523,6 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
         ),
       ),
     );
+
   }
 }

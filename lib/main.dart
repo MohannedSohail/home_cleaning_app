@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'account_screen.dart';
 import 'appointment_screen.dart';
 import 'calender.dart';
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Calender(),
+      home: OnBordingScreen(),
 
     );
   }

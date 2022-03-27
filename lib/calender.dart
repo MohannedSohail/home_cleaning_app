@@ -1,8 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-
 import 'event.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Calender extends StatefulWidget {
   const Calender({Key? key}) : super(key: key);
@@ -14,8 +16,19 @@ class Calender extends StatefulWidget {
 class _CalenderState extends State<Calender> {
   var isVisible = true;
   var isVisibleImage = false;
-  List<Event> event = [];
-  var _opacity=1.0;
+  Map<DateTime, List<Event>> selectedEvent = {};
+  var _opacity = 1.0;
+  DateTime calendarSelectedDay = DateTime.now();
+  DateTime calendarFocusedDay = DateTime.now();
+
+  var selectedFormatter = DateFormat('dd-MM-yyy');
+  var _nameController = TextEditingController();
+
+  List<Event> _getEventfromDay(DateTime date) {
+    return selectedEvent[date] ?? [];
+  }
+
+  final List _cleaningList = ["Upkeep Cleaning", "Initial Cleaning"];
 
   @override
   Widget build(BuildContext context) {
@@ -25,18 +38,13 @@ class _CalenderState extends State<Calender> {
     var date = DateTime.now();
     var formatter = DateFormat('dd MMMM yyyy');
     var oclockformatter = DateFormat.j();
+    var oclockformatte = DateFormat.jm();
 
-    String formattedDate = formatter.format(date);
-    String formattedoclockDate = oclockformatter.format(date);
+    var _selectedCleaningType;
+
+    String formattedDate = formatter.format(calendarSelectedDay);
+
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        elevation: 10,
-        splashColor: Color(0xff5C4DB1),
-        onPressed: () {},
-        label: Text("Add Event"),
-        icon: Icon(Icons.add,),
-        backgroundColor: Color(0xffFFBF67),
-      ),
       backgroundColor: Color(0xff5C4DB1),
       appBar: AppBar(
         elevation: 0,
@@ -58,8 +66,20 @@ class _CalenderState extends State<Calender> {
                 firstDay: DateTime.utc(2010, 10, 16),
                 lastDay: DateTime.utc(2030, 3, 14),
                 focusedDay: DateTime.now(),
+                onDaySelected: (DateTime selectedDay, DateTime focusDay) {
+                  setState(() {
+                    calendarSelectedDay = selectedDay;
+                    calendarFocusedDay = focusDay;
+
+                    print("selectedDay ${formattedDate}");
+                  });
+                },
+                selectedDayPredicate: (DateTime date) {
+                  return isSameDay(calendarSelectedDay, date);
+                },
+                eventLoader: _getEventfromDay,
                 calendarFormat: CalendarFormat.week,
-                startingDayOfWeek: StartingDayOfWeek.thursday,
+                startingDayOfWeek: StartingDayOfWeek.sunday,
                 headerStyle: const HeaderStyle(
                   formatButtonVisible: false,
                   titleTextStyle: TextStyle(
@@ -83,12 +103,17 @@ class _CalenderState extends State<Calender> {
                 calendarStyle: CalendarStyle(
                   defaultTextStyle: TextStyle(color: Colors.white),
                   weekendTextStyle: TextStyle(color: Colors.white),
+                  markerDecoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xffDFDEFF),
+                    border: Border.all(color: Colors.black),
+                  ),
                   selectedDecoration: BoxDecoration(
                     color: Color(0xffFFBF67),
                     shape: BoxShape.circle,
                   ),
                   todayDecoration: BoxDecoration(
-                    color: Color(0xffFFBF67),
+                    color: Color(0xffDFDEFF).withOpacity(0.4),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -107,7 +132,7 @@ class _CalenderState extends State<Calender> {
                 margin: EdgeInsets.only(top: height / 6.5),
                 width: width,
                 padding: EdgeInsets.symmetric(horizontal: 10),
-                height:  height,
+                height: height,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -138,339 +163,159 @@ class _CalenderState extends State<Calender> {
                           height: 25,
                         ),
 
-                        // ListView.builder(itemCount: event.length,itemBuilder: (context,index){
-                        //
-                        // }),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 50,
-                              child: Text(
-                                "$formattedoclockDate",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                padding: EdgeInsets.all(18),
-                                margin: EdgeInsets.only(bottom: 20, left: 10),
-                                color: Color(0xffDFDEFF),
-                                child: Column(
+                        ..._getEventfromDay(calendarSelectedDay).map(
+                          (Event event) => Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
                                   children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Michael Hamilton"),
-                                            SizedBox(
-                                              height: 15,
-                                            ),
-                                            Text(
-                                              "Upkeep Cleaning",
-                                              style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Icon(Icons.timer,
-                                                    color: Color(0xff5C4DB1)),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text("10AM - 11AM"),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text("Client Rating"),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Icon(Icons.star,
-                                                    color: Colors.black),
-                                                Icon(Icons.star,
-                                                    color: Colors.black),
-                                                Icon(Icons.star,
-                                                    color: Colors.black),
-                                              ],
-                                            ),
-                                          ],
+                                    Container(
+                                      margin: EdgeInsets.only(top: 8),
+                                      width: 40,
+                                      child: Text(
+                                        "${oclockformatter.format(event.time)}",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
                                         ),
-                                        Spacer(),
-                                        Image.asset(
-                                          "assets/personman.png",
-                                          width: 70,
-                                          height: 70,
-                                        ),
-                                      ],
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                     SizedBox(
-                                      height: 10,
+                                      height: 100,
                                     ),
                                     Container(
                                       height: 0.5,
                                       color: Colors.grey,
+                                      width: 33,
                                     ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.phone_outlined,
-                                            color: Color(0xff5C4DB1)),
-                                        SizedBox(
-                                          width: 30,
-                                        ),
-                                        Icon(Icons.mail_outline_outlined,
-                                            color: Color(0xff5C4DB1)),
-                                        Spacer(),
-                                        Text(("\$50")),
-                                      ],
-                                    )
                                   ],
                                 ),
-                              ),
+                                Expanded(
+                                  child: Container(
+                                    padding: EdgeInsets.all(18),
+                                    margin: EdgeInsets.only(bottom: 20, left: 10),
+                                    color: Color(0xffDFDEFF),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(event.name),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                  event.cleaningType,
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                     ),
+                                                ),
+                                                SizedBox(
+                                                  height: 13,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    // Icon(Icons.access_time,
+                                                    //     color: Color(0xff5C4DB1),),
+
+                                                    SvgPicture.asset("assets/oclock.svg"),
+                                                    SizedBox(
+                                                      width: 12,
+                                                    ),
+                                                    Text(
+                                                        "${oclockformatte.format(event.time) + "  -  " + TimeOfDay.fromDateTime(event.time.subtract(Duration(hours: -1))).format(context)}",style: TextStyle(
+                                                      color: Color(0xff5C4DB1),
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 12,
+                                                    )),
+
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 13,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text("Client Rating",style: TextStyle(
+                                                        color: Colors.grey,
+                                                       )),
+                                                    SizedBox(
+                                                      width:15,
+                                                    ),
+                                                    Icon(Icons.star,
+                                                        color: Colors.black,size: 20),
+                                                    SizedBox(
+                                                      width: 3,
+                                                    ),
+                                                    Icon(Icons.star,
+                                                        color: Colors.black,size: 20),
+                                                    SizedBox(
+                                                      width: 3,
+                                                    ),
+                                                    Icon(Icons.star,
+                                                        color: Colors.black,size: 20),
+
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            Spacer(),
+                                            Image.asset(
+                                              "assets/personman.png",
+                                              width: 70,
+                                              height: 70,
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          height: 0.5,
+                                          color: Colors.grey,
+
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 5.0),
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.phone_outlined,
+                                                  color: Color(0xff5C4DB1)),
+                                              SizedBox(
+                                                width: 30,
+                                              ),
+                                              Icon(Icons.mail_outline_outlined,
+                                                  color: Color(0xff5C4DB1)),
+                                              Spacer(),
+                                              Padding(
+                                                padding: const EdgeInsets.only(right: 14.0),
+                                                child: Text(("\$50"),style: TextStyle(color: Color(0xff5C4DB1),fontSize: 15,fontWeight: FontWeight.bold,),),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                        // Row(
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   children: [
-                        //     Container(
-                        //       width: 50,
-                        //       child: Text(
-                        //         "10 AM",
-                        //         style: TextStyle(
-                        //           color: Colors.black,
-                        //           fontWeight: FontWeight.w600,
-                        //         ),
-                        //         textAlign: TextAlign.center,
-                        //       ),
-                        //     ),
-                        //     Expanded(
-                        //       child: Container(
-                        //         padding: EdgeInsets.all(18),
-                        //         margin: EdgeInsets.only(bottom: 20, left: 10),
-                        //         color: Color(0xffDFDEFF),
-                        //         child: Column(
-                        //           children: [
-                        //             Row(
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.start,
-                        //               children: [
-                        //                 Column(
-                        //                   crossAxisAlignment:
-                        //                       CrossAxisAlignment.start,
-                        //                   children: [
-                        //                     Text("Michael Hamilton"),
-                        //                     SizedBox(
-                        //                       height: 15,
-                        //                     ),
-                        //                     Text(
-                        //                       "Upkeep Cleaning",
-                        //                       style: TextStyle(
-                        //                           color: Colors.grey,
-                        //                           fontWeight: FontWeight.w500),
-                        //                     ),
-                        //                     SizedBox(
-                        //                       height: 5,
-                        //                     ),
-                        //                     Row(
-                        //                       mainAxisAlignment:
-                        //                           MainAxisAlignment.start,
-                        //                       children: [
-                        //                         Icon(Icons.timer,
-                        //                             color: Color(0xff5C4DB1)),
-                        //                         SizedBox(
-                        //                           width: 5,
-                        //                         ),
-                        //                         Text("10AM - 11AM"),
-                        //                       ],
-                        //                     ),
-                        //                     SizedBox(
-                        //                       height: 10,
-                        //                     ),
-                        //                     Row(
-                        //                       children: const [
-                        //                         Text("Client Rating"),
-                        //                         SizedBox(
-                        //                           width: 5,
-                        //                         ),
-                        //                         Icon(Icons.star,
-                        //                             color: Colors.black),
-                        //                         Icon(Icons.star,
-                        //                             color: Colors.black),
-                        //                         Icon(Icons.star,
-                        //                             color: Colors.black),
-                        //                       ],
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //                 const Spacer(),
-                        //                 Image.asset(
-                        //                   "assets/personman.png",
-                        //                   width: 70,
-                        //                   height: 70,
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //             const SizedBox(
-                        //               height: 10,
-                        //             ),
-                        //             Container(
-                        //               height: 0.5,
-                        //               color: Colors.grey,
-                        //             ),
-                        //             const SizedBox(
-                        //               height: 10,
-                        //             ),
-                        //             Row(
-                        //               children: const [
-                        //                 Icon(Icons.phone_outlined,
-                        //                     color: Color(0xff5C4DB1)),
-                        //                 SizedBox(
-                        //                   width: 30,
-                        //                 ),
-                        //                 Icon(Icons.mail_outline_outlined,
-                        //                     color: Color(0xff5C4DB1)),
-                        //                 Spacer(),
-                        //                 Text(("\$50")),
-                        //               ],
-                        //             )
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // Row(
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   children: [
-                        //     Container(
-                        //       width: 50,
-                        //       child: Text(
-                        //         "10 AM",
-                        //         style: TextStyle(
-                        //           color: Colors.black,
-                        //           fontWeight: FontWeight.w600,
-                        //         ),
-                        //         textAlign: TextAlign.center,
-                        //       ),
-                        //     ),
-                        //     Expanded(
-                        //       child: Container(
-                        //         padding: EdgeInsets.all(18),
-                        //         margin: EdgeInsets.only(bottom: 20, left: 10),
-                        //         color: Color(0xffDFDEFF),
-                        //         child: Column(
-                        //           children: [
-                        //             Row(
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.start,
-                        //               children: [
-                        //                 Column(
-                        //                   crossAxisAlignment:
-                        //                       CrossAxisAlignment.start,
-                        //                   children: [
-                        //                     Text("Michael Hamilton"),
-                        //                     SizedBox(
-                        //                       height: 15,
-                        //                     ),
-                        //                     Text(
-                        //                       "Upkeep Cleaning",
-                        //                       style: TextStyle(
-                        //                           color: Colors.grey,
-                        //                           fontWeight: FontWeight.w500),
-                        //                     ),
-                        //                     SizedBox(
-                        //                       height: 5,
-                        //                     ),
-                        //                     Row(
-                        //                       mainAxisAlignment:
-                        //                           MainAxisAlignment.start,
-                        //                       children: [
-                        //                         Icon(Icons.timer,
-                        //                             color: Color(0xff5C4DB1)),
-                        //                         SizedBox(
-                        //                           width: 5,
-                        //                         ),
-                        //                         Text("10AM - 11AM"),
-                        //                       ],
-                        //                     ),
-                        //                     SizedBox(
-                        //                       height: 10,
-                        //                     ),
-                        //                     Row(
-                        //                       children: [
-                        //                         Text("Client Rating"),
-                        //                         SizedBox(
-                        //                           width: 5,
-                        //                         ),
-                        //                         Icon(Icons.star,
-                        //                             color: Colors.black),
-                        //                         Icon(Icons.star,
-                        //                             color: Colors.black),
-                        //                         Icon(Icons.star,
-                        //                             color: Colors.black),
-                        //                       ],
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //                 Spacer(),
-                        //                 Image.asset(
-                        //                   "assets/personman.png",
-                        //                   width: 70,
-                        //                   height: 70,
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //             SizedBox(
-                        //               height: 10,
-                        //             ),
-                        //             Container(
-                        //               height: 0.5,
-                        //               color: Colors.grey,
-                        //             ),
-                        //             SizedBox(
-                        //               height: 10,
-                        //             ),
-                        //             Row(
-                        //               children: [
-                        //                 Icon(Icons.phone_outlined,
-                        //                     color: Color(0xff5C4DB1)),
-                        //                 SizedBox(
-                        //                   width: 30,
-                        //                 ),
-                        //                 Icon(Icons.mail_outline_outlined,
-                        //                     color: Color(0xff5C4DB1)),
-                        //                 Spacer(),
-                        //                 Text(("\$50")),
-                        //               ],
-                        //             )
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
                       ],
                     ),
                   ),
@@ -486,8 +331,8 @@ class _CalenderState extends State<Calender> {
                     onTap: () {
                       setState(() {
                         isVisible = !isVisible;
-                        isVisibleImage=!isVisibleImage;
-                        _opacity=0.0;
+                        isVisibleImage = !isVisibleImage;
+                        _opacity = 0.0;
                       });
                     },
                     child: Image.asset(
@@ -496,9 +341,6 @@ class _CalenderState extends State<Calender> {
                     )),
               ),
             ),
-
-
-
             Visibility(
               visible: isVisibleImage,
               child: Align(
@@ -507,9 +349,8 @@ class _CalenderState extends State<Calender> {
                     onTap: () {
                       setState(() {
                         isVisible = !isVisible;
-                        isVisibleImage=!isVisibleImage;
-                        _opacity=1.0;
-
+                        isVisibleImage = !isVisibleImage;
+                        _opacity = 1.0;
                       });
                     },
                     child: Image.asset(
@@ -518,12 +359,176 @@ class _CalenderState extends State<Calender> {
                     )),
               ),
             ),
-
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        elevation: 10,
+        splashColor: Color(0xff5C4DB1),
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setStatee) {
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    scrollable: false,
+                    title: Text("Add Event On Calendar",
+                        textAlign: TextAlign.center),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextFormField(
+                          controller: _nameController,
+                          keyboardType: TextInputType.name,
+                          decoration: InputDecoration(
+                              labelText: "Enter Your Name",
+                              prefixIcon:
+                                  Icon(Icons.person, color: Color(0xff5C4DB1)),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              )),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 5),
+                            child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                              isExpanded: true,
+                              borderRadius: BorderRadius.circular(15),
+                              icon: SvgPicture.asset(
+                                "assets/calendar-4.svg",
+                                height: 18,
+                                width: 18,
+                              ),
+                              items: _cleaningList.map((cleaningType) {
+                                return DropdownMenuItem(
+                                  alignment: AlignmentDirectional.center,
+                                  child: Text(
+                                    cleaningType,
+                                  ),
+                                  value: cleaningType,
+                                );
+                              }).toList(),
+                              value: _selectedCleaningType,
+                              hint: Text("Select CleaningType "),
+                              onChanged: (value) {
+                                setStatee(() {
+                                  _selectedCleaningType = value;
+                                });
+                              },
+                            )),
+                          ),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: BoxBorder.lerp(
+                                  Border.all(
+                                      color: Colors.black38,
+                                      style: BorderStyle.solid,
+                                      width: 0.8),
+                                  Border.all(
+                                      color: Colors.black38,
+                                      style: BorderStyle.solid),
+                                  0.1)),
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          if (_nameController.text.toString().isNotEmpty &&
+                              _selectedCleaningType.toString().isNotEmpty &&
+                              _selectedCleaningType != null) {
+                            if (selectedEvent[calendarSelectedDay] != null) {
+                              Event event = Event(_nameController.text, date,
+                                  _selectedCleaningType);
+                              selectedEvent[calendarSelectedDay]?.add(event);
+                              Navigator.pop(context);
+
+                              setState(() {});
+                            } else {
+                              selectedEvent[calendarSelectedDay] = [
+                                Event(_nameController.text, date,
+                                    _selectedCleaningType)
+                              ];
+                              Navigator.pop(context);
+
+                              setState(() {});
+                            }
+                          } else {}
+
+                          setState(() {
+                            _nameController.clear();
+                          });
+                        },
+                        child: Text("OK",
+                            style: TextStyle(
+                              color: Color(0xff5C4DB1),
+                            )),
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(CircleBorder()),
+                          padding:
+                              MaterialStateProperty.all(EdgeInsets.all(13)),
+                          overlayColor:
+                              MaterialStateProperty.resolveWith<Color?>(
+                                  (states) {
+                            if (states.contains(MaterialState.pressed))
+                              return Color(0xffFFBF67); // <-- Splash color
+                          }),
+                        ),
+                      ),
+                    ],
+                  );
+                });
+              });
+        },
+        label: Text("Add Event"),
+        icon: Icon(
+          Icons.add,
+        ),
+        backgroundColor: Color(0xffFFBF67),
+      ),
     );
   }
+
+  // DropdownButtonHideUnderline buildDropdownButton() {
+  //   return DropdownButtonHideUnderline(
+  //       child: DropdownButton(
+  //         isExpanded: true,
+  //         borderRadius: BorderRadius.circular(15),
+  //         items: _cleaningList.map((country) {
+  //           return DropdownMenuItem(
+  //             alignment: AlignmentDirectional.center,
+  //             child: Text(
+  //               country,
+  //             ),
+  //             value: country,
+  //           );
+  //         }).toList(),
+  //         value: _selectedCleaningType,
+  //         hint: Text("Select You Country "),
+  //         onChanged: (value){
+  //           setState(() {
+  //             _selectedCleaningType=value;
+  //           });
+  //         },
+  //       ));
+  // }
 
   Row dayTask(String time, String name) {
     return Row(
