@@ -1,49 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
-
 import 'account_Screen2.dart';
 import 'account_screen.dart';
 import 'calender.dart';
-import 'calenderscreen.dart';
 
 class MyPlanCleaner extends StatefulWidget {
+  const MyPlanCleaner({Key? key}) : super(key: key);
+
   @override
   _MyPlanCleanerState createState() => _MyPlanCleanerState();
 }
 
 class _MyPlanCleanerState extends State<MyPlanCleaner> {
-  int _value = 0;
-  int _btn_value=0;
-  var isVisible =true;
 
+  int _value = 0;
+  int _btn_Value = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff5c4db1),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: const Align(
+            alignment: Alignment.center,
+            child: Text(
+              "Your Plan ",
+              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
+            )),
+      ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Text("Your Plan",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold)),
-            ),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30))),
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0, left: 40),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 35.0, left: 40),
                       child: Align(
                           alignment: Alignment.topLeft,
                           child: Text(
@@ -54,8 +54,8 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                           )),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                          top: 30.0, left: 30, right: 30),
+                      padding:
+                          const EdgeInsets.only(top: 25.0, left: 30, right: 30),
                       child: Row(
                         children: [
                           Expanded(
@@ -68,16 +68,15 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                                         height: 130),
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                        color: Color(0xffDFDEFF),
+                                        color: const Color(0xffDFDEFF),
                                         borderRadius:
                                             BorderRadius.circular(30)),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 15.0),
+                                  const Padding(
+                                    padding: EdgeInsets.only(top: 15.0),
                                     child: Text("Initial Cleaning",
                                         style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 13)),
+                                            color: Colors.black, fontSize: 13)),
                                   ),
                                 ],
                               ),
@@ -93,16 +92,15 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                                         height: 130),
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                        color: Color(0xffDFDEFF),
+                                        color: const Color(0xffDFDEFF),
                                         borderRadius:
                                             BorderRadius.circular(30)),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 15.0),
+                                  const Padding(
+                                    padding: EdgeInsets.only(top: 15.0),
                                     child: Text("Upkeep Cleaning",
                                         style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 13)),
+                                            color: Colors.black, fontSize: 13)),
                                   ),
                                 ],
                               ),
@@ -119,7 +117,7 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                             child: GestureDetector(
                               onTap: () => setState(() => _value = 0),
                               child: _value == 0
-                                  ? Icon(
+                                  ? const Icon(
                                       Icons.check_circle,
                                       size: 25,
                                       color: Color(0xffDC4F89),
@@ -127,7 +125,7 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                                   : Container(
                                       height: 20,
                                       width: 20,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Colors.grey,
                                       ),
@@ -141,7 +139,7 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                             child: GestureDetector(
                               onTap: () => setState(() => _value = 1),
                               child: _value == 1
-                                  ? Icon(
+                                  ? const Icon(
                                       Icons.check_circle,
                                       size: 25,
                                       color: Color(0xffDC4F89),
@@ -149,7 +147,7 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                                   : Container(
                                       height: 20,
                                       width: 20,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Colors.grey,
                                       ),
@@ -159,8 +157,9 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 25.0, left: 40),
+
+                     const Padding(
+                      padding: EdgeInsets.only(top: 25.0, left: 40),
                       child: Align(
                           alignment: Alignment.topLeft,
                           child: Text(
@@ -171,94 +170,179 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                           )),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 25.0, left: 40),
+                      padding:  const EdgeInsets.only(top: 20.0, left: 30),
                       child: Row(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 20.0),
-                            child: Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(7),
-                                    color:_btn_value==2? Color(0xffDC4F89): Colors.white ,
-                                    border:
-                                        Border.all(color:_btn_value==2? Colors.white: Colors.black26)),
-                                child: MaterialButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _btn_value=2;
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => AccountScreen2()));
-
-                                    });
-                                  },
-                                  child: Text(
-                                    "Weekly",
-                                    style: TextStyle(
-                                        color: _btn_value==2? Colors.white: Colors.black26,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 20.0),
-                            child: Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(7),
-                                    color:_btn_value==1? Color(0xffDC4F89): Colors.white ,
-                                    border:
-                                    Border.all(color:_btn_value==1? Colors.white: Colors.black26)),
-                                child: MaterialButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _btn_value=1;
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => AccountScreen()));
-
-                                    });
-                                  },
-                                  child: Text(
-                                    "Bi-Weekly",
-                                    style: TextStyle(
-                                        color: _btn_value==1? Colors.white: Colors.black26,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 20.0),
-                            child: Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(7),
-                                    color:_btn_value==0? Color(0xffDC4F89):Colors.white,
-                                    border: Border.all(color:_btn_value==0? Colors.white: Colors.black26)
-                                ),
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 15,left: 8),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: _btn_Value == 2
+                                      ?  const Color(0xffDC4F89)
+                                      : Colors.white,
+                                  border: Border.all(
+                                      color: _btn_Value == 2
+                                          ? Colors.white
+                                          : Colors.black26)),
                               child: MaterialButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _btn_value=0;
-
-                                    });
-                                  },
-                                  child: Text(
-                                    "Monthly",
-                                    style: TextStyle(
-                                        color: _btn_value==0? Colors.white:Colors.black26,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                onPressed: () {
+                                  setState(() {
+                                    _btn_Value = 2;
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                 const AccountScreen()));
+                                  });
+                                },
+                                child: Text(
+                                  "Weekly",
+                                  style: TextStyle(
+                                      color: _btn_Value == 2
+                                          ? Colors.white
+                                          : Colors.black26,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
                           ),
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 15,left: 8),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: _btn_Value == 1
+                                      ?  const Color(0xffDC4F89)
+                                      : Colors.white,
+                                  border: Border.all(
+                                      color: _btn_Value == 1
+                                          ? Colors.white
+                                          : Colors.black26)),
+                              child: MaterialButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _btn_Value = 1;
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const AccountScreen2()));
+                                  });
+                                },
+                                child: Text(
+                                  "Bi-weekly",
+                                  style: TextStyle(
+                                      color: _btn_Value == 1
+                                          ? Colors.white
+                                          : Colors.black26,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 15,left: 8),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: _btn_Value == 0
+                                      ?  const Color(0xffDC4F89)
+                                      : Colors.white,
+                                  border: Border.all(
+                                      color: _btn_Value == 0
+                                          ? Colors.white
+                                          : Colors.black26)),
+                              child: MaterialButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _btn_Value = 0;
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const AccountScreen2()));
+                                  });
+                                },
+                                child: Text(
+                                  "Monthly",
+                                  style: TextStyle(
+                                      color: _btn_Value == 0
+                                          ? Colors.white
+                                          : Colors.black26,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          // Padding(
+                          //   padding:  EdgeInsets.only(right: 20.0),
+                          //   child: Expanded(
+                          //     child: Container(
+                          //       decoration: BoxDecoration(
+                          //           borderRadius: BorderRadius.circular(7),
+                          //           color: _btn_Value == 1
+                          //               ?  Color(0xffDC4F89)
+                          //               : Colors.white,
+                          //           border: Border.all(
+                          //               color: _btn_Value == 1
+                          //                   ? Colors.white
+                          //                   : Colors.black26)),
+                          //       child: MaterialButton(
+                          //         onPressed: () {
+                          //           setState(() {
+                          //             _btn_Value = 1;
+                          //             Navigator.of(context).push(
+                          //                 MaterialPageRoute(
+                          //                     builder: (_) =>  AccountScreen()));
+                          //           });
+                          //         },
+                          //         child: Text(
+                          //           "Bi-Weekly",
+                          //           style: TextStyle(
+                          //               color: _btn_Value == 1
+                          //                   ? Colors.white
+                          //                   : Colors.black26,
+                          //               fontWeight: FontWeight.bold),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // Padding(
+                          //   padding:  EdgeInsets.only(right: 20.0),
+                          //   child: Expanded(
+                          //     child: Container(
+                          //       decoration: BoxDecoration(
+                          //           borderRadius: BorderRadius.circular(7),
+                          //           color: _btn_Value == 0
+                          //               ?  Color(0xffDC4F89)
+                          //               : Colors.white,
+                          //           border: Border.all(
+                          //               color: _btn_Value == 0
+                          //                   ? Colors.white
+                          //                   : Colors.black26)),
+                          //       child: MaterialButton(
+                          //         onPressed: () {
+                          //           setState(() {
+                          //             _btn_Value = 0;
+                          //           });
+                          //         },
+                          //         child: Text(
+                          //           "Monthly",
+                          //           style: TextStyle(
+                          //               color: _btn_Value == 0
+                          //                   ? Colors.white
+                          //                   : Colors.black26,
+                          //               fontWeight: FontWeight.bold),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0, left: 40),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 25.0, left: 40),
                       child: Align(
                           alignment: Alignment.topLeft,
                           child: Text(
@@ -279,7 +363,7 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                                 Container(
                                   height: 80,
                                   width: double.infinity,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       color: Color(0xff5C4DB1),
                                       shape: BoxShape.circle),
                                   child: Stack(
@@ -290,25 +374,31 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                                         alignment: Alignment.center,
                                       ),
                                       Positioned(
-                                        top: 0.0,
-                                        right: 2.5,
-                                        child:Container(
-                                              width: 23,height: 23,
-                                              decoration:BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Color(0xffDC4F89),
-
-                                              ) ,
-
-                                              child: Align(alignment: Alignment.center,child: Text("4", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 13),)),
-                                            )
-                                        ),
+                                          top: 0.0,
+                                          right: 2.5,
+                                          child: Container(
+                                            width: 23,
+                                            height: 23,
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Color(0xffDC4F89),
+                                            ),
+                                            child: const Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "4",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13),
+                                                )),
+                                          )),
                                     ],
-
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10.0),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 10.0),
                                   child: Text("Inside Fridge",
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 12)),
@@ -325,18 +415,17 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                                 Container(
                                   height: 80,
                                   width: double.infinity,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       color: Color(0xff5C4DB1),
                                       shape: BoxShape.circle),
                                   child: Align(
-
                                     child: Image.asset("assets/png2.png",
                                         height: 40),
                                     alignment: Alignment.center,
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10.0),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 10.0),
                                   child: Text("Organizing",
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 12)),
@@ -353,7 +442,7 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                                 Container(
                                   height: 80,
                                   width: double.infinity,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       color: Color(0xff5C4DB1),
                                       shape: BoxShape.circle),
                                   child: Stack(
@@ -367,24 +456,29 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                                         // draw a red marble
                                         top: 0.0,
                                         right: 2.5,
-                                        child:
-                                        Container(
-                                          width: 23,height: 23,
-                                        decoration:BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Color(0xffDC4F89),
-
-                                        ) ,
-
-                                        child: Align(alignment: Alignment.center,child: Text("10", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 13),)),
+                                        child: Container(
+                                          width: 23,
+                                          height: 23,
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Color(0xffDC4F89),
+                                          ),
+                                          child: const Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "10",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13),
+                                              )),
                                         ),
                                       ),
-
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10.0),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 10.0),
                                   child: Text("Small Blinds",
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 12)),
@@ -407,18 +501,17 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                                 Container(
                                   height: 80,
                                   width: double.infinity,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       color: Color(0xff5C4DB1),
                                       shape: BoxShape.circle),
                                   child: Align(
-
-                                        child: Image.asset("assets/png5.png",
-                                            height: 40),
-                                        alignment: Alignment.center,
-                                      ),
+                                    child: Image.asset("assets/png5.png",
+                                        height: 40),
+                                    alignment: Alignment.center,
+                                  ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10.0),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 10.0),
                                   child: Text("Patio",
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 12)),
@@ -435,17 +528,17 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                                 Container(
                                   height: 80,
                                   width: double.infinity,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       color: Color(0xff5C4DB1),
                                       shape: BoxShape.circle),
                                   child: Align(
-                                        child: Image.asset("assets/png2.png",
-                                            height: 40),
-                                        alignment: Alignment.center,
-                                      ),
+                                    child: Image.asset("assets/png2.png",
+                                        height: 40),
+                                    alignment: Alignment.center,
+                                  ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10.0),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 10.0),
                                   child: Text("Organizing",
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 12)),
@@ -462,59 +555,70 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                                 Container(
                                   height: 80,
                                   width: double.infinity,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       color: Color(0xff5C4DB1),
                                       shape: BoxShape.circle),
                                   child: Stack(
                                     children: [
                                       Align(
-
-                                        child: Image.asset("assets/png3.png",
-                                            height: 40,),
+                                        child: Image.asset(
+                                          "assets/png3.png",
+                                          height: 40,
+                                        ),
                                         alignment: Alignment.center,
                                       ),
                                       Positioned(
                                         // draw a red marble
                                         top: 0.0,
                                         right: 2.5,
-                                        child:
-                                        Container(
-                                          width: 23,height: 23,
-                                          decoration:BoxDecoration(
+                                        child: Container(
+                                          width: 23,
+                                          height: 23,
+                                          decoration: const BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: Color(0xffDC4F89),
-
-                                          ) ,
-
-                                          child: Align(alignment: Alignment.center,child: Text("10", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 13),)),
+                                          ),
+                                          child: const Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "10",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13),
+                                              )),
                                         ),
                                       ),
-
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10.0),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 10.0),
                                   child: Text("Small Blinds",
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 12)),
                                 ),
-
                               ],
                             ),
                           ),
                         )
                       ]),
                     ),
-
                     Container(
-                      decoration: BoxDecoration( color: Color(0xff5C4DB1),borderRadius: BorderRadius.circular(10)),
-                      child: MaterialButton(onPressed: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Calender()));
-                      },child: Text("Go To Calender Screen  ",style: TextStyle(color: Colors.white)),
+                      margin: const EdgeInsets.only(bottom: 5),
+
+                      decoration: BoxDecoration(
+                          color: const Color(0xff5C4DB1),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: MaterialButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_) => const Calender()));
+                        },
+                        child: const Text("Go To Calender Screen  ",
+                            style: TextStyle(color: Colors.white)),
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -523,6 +627,5 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
         ),
       ),
     );
-
   }
 }

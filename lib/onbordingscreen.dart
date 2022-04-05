@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'appointment_screen.dart';
-import 'plancleaner.dart';
 
 class OnBordingScreen extends StatefulWidget {
+  const OnBordingScreen({Key? key}) : super(key: key);
+
   @override
   _OnBordingScreenState createState() => _OnBordingScreenState();
 }
@@ -22,8 +21,8 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
               Container(
                 height: 50,
                 width: 100,
-                margin: EdgeInsets.only(top: 40),
-                decoration: BoxDecoration(
+                margin: const EdgeInsets.only(top: 40),
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/logo.png"),
                   ),
@@ -69,7 +68,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                     ),
                     child: MaterialButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => AppointmentScreen()));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const AppointmentScreen()));
                       },
                       child: const Text(
                         "Get Started",

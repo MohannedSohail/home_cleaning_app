@@ -16,12 +16,12 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       body: Column(
         children: [
 
-          SizedBox(height: 35,),
+          const SizedBox(height: 35,),
           Image.asset("assets/home-cleaning.png",fit: BoxFit.cover,),
           Expanded(
             child: Container(
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0xff5C4DB1),
                 borderRadius: BorderRadius.only(topRight: Radius.circular(40),topLeft: Radius.circular(40)),
               ),
@@ -30,31 +30,31 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                 child: Column(
 
                   children: [
-                    SizedBox(height: 50,),
-                    Text("Cleaning On Demand",textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
-                    SizedBox(height: 30,),
-                    Text("Book an appointment in\nless than 60 seconds and get on\n the schedule as early as\n tomorrow.",textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w500,),),
-                    Spacer(),
+                    const SizedBox(height: 50,),
+                    const Text("Cleaning On Demand",textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
+                    const SizedBox(height: 30,),
+                    const Text("Book an appointment in\nless than 60 seconds and get on\n the schedule as early as\n tomorrow.",textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w500,),),
+                    const Spacer(),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextButton(onPressed: (){}, child: Text("Skip",style: TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.normal),)),
-                        Spacer(),
+                        TextButton(onPressed: (){}, child: const Text("Skip",style: TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.normal),)),
+                        const Spacer(),
                         Row(
                           children: [
                             TextButton(onPressed: (){
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => MyPlanCleaner()));
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const MyPlanCleaner()));
 
-                            }, child: Text("Next",style: TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.normal),)),
+                            }, child: const Text("Next",style: TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.normal),)),
                             Container(
                               height: 29,
                               width: 29,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,color: Color(0xffFFBF67),
 
                               ),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.keyboard_arrow_right_rounded,
                                 size: 22,
                                 color: Colors.white,

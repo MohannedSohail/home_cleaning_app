@@ -42,13 +42,13 @@ class _AccountScreenState extends State<AccountScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[100],
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft:Radius.circular(30)),
+                      borderRadius: const BorderRadius.only(topRight: Radius.circular(30),topLeft:Radius.circular(30)),
                     ),
 
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 35.0, left: 40),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 35.0, left: 40),
                           child: Align(
                               alignment: Alignment.topLeft,
                               child: Text(
@@ -62,7 +62,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Container(
                             height: 60,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Color(0xffFFFFFF),
                                 border:Border(bottom: BorderSide(width: 0.4,color: Colors.black12))
                             ),
@@ -73,8 +73,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                   padding: const EdgeInsets.only(left: 40.0),
                                   child: SvgPicture.asset("assets/Group 3614.svg",height: 20,width: 20,),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 40.0),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 40.0),
                                   child: Text("Notifications",style: TextStyle(color: Colors.black,fontSize: 16),),
                                 ),
 
@@ -86,7 +86,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
                         Container(
                           height: 60,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Color(0xffFFFFFF),
                               border:Border(bottom: BorderSide(width: 0.4,color: Colors.black12))
                           ),
@@ -97,8 +97,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                 padding: const EdgeInsets.only(left: 40.0),
                                 child: SvgPicture.asset("assets/calendar-4.svg",height: 20,width: 20,),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 40.0),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 40.0),
                                 child: Text("My Bookings",style: TextStyle(color: Colors.black,fontSize: 16),),
                               ),
 
@@ -108,7 +108,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         ),
                         Container(
                           height: 60,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Color(0xffFFFFFF),
                               border:Border(bottom: BorderSide(width: 0.4,color: Colors.black12))
                           ),
@@ -119,8 +119,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                 padding: const EdgeInsets.only(left: 40.0),
                                 child: SvgPicture.asset("assets/tick-2.svg",height: 20,width: 20,),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 40.0),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 40.0),
                                 child: Text("My Plan",style: TextStyle(color: Colors.black,fontSize: 16),),
                               ),
 
@@ -131,7 +131,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
                         Container(
                           height: 60,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Color(0xffFFFFFF),
                               border:Border(bottom: BorderSide(width: 0.4,color: Colors.black12))
                           ),
@@ -142,8 +142,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                 padding: const EdgeInsets.only(left: 40.0),
                                 child: SvgPicture.asset("assets/address.svg",height: 20,width: 20,),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 40.0),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 40.0),
                                 child: Text("Addresses",style: TextStyle(color: Colors.black,fontSize: 16),),
                               ),
 
@@ -152,8 +152,8 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                         ),
 
-                        Padding(
-                          padding: const EdgeInsets.only(top: 35.0, left: 40),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 35.0, left: 40),
                           child: Align(
                               alignment: Alignment.topLeft,
                               child: Text(
@@ -168,7 +168,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           padding: const EdgeInsets.only(top: 30.0),
                           child: Container(
                             height: 60,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Color(0xffFFFFFF),
                                 border:Border(bottom: BorderSide(width: 0.4,color: Colors.black12))
                             ),
@@ -179,8 +179,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                   padding: const EdgeInsets.only(left: 40.0),
                                   child: SvgPicture.asset("assets/Path 4536.svg",height: 20,width: 20,),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 40.0),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 40.0),
                                   child: Text("Facebook",style: TextStyle(color: Colors.black,fontSize: 16),),
                                 ),
 
@@ -192,7 +192,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
                         Container(
                           height: 60,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Color(0xffFFFFFF),
                               border:Border(bottom: BorderSide(width: 0.4,color: Colors.black12))
                           ),
@@ -203,8 +203,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                 padding: const EdgeInsets.only(left: 40.0),
                                 child: SvgPicture.asset("assets/Path 4537.svg",height: 20,width: 20,),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 40.0),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 40.0),
                                 child: Text("Twitter",style: TextStyle(color: Colors.black,fontSize: 16),),
                               ),
 
@@ -214,7 +214,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         ),
                         Container(
                           height: 70,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Color(0xffFFFFFF),
                               borderRadius:BorderRadius.only(bottomRight:Radius.circular(20),bottomLeft:Radius.circular(20)),
                           ),
@@ -225,8 +225,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                 padding: const EdgeInsets.only(left: 40.0),
                                 child: SvgPicture.asset("assets/Group 3613.svg",height: 20,width: 20,),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 40.0),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 40.0),
                                 child: Text("Gmail",style: TextStyle(color: Colors.black,fontSize: 16),),
                               ),
 
