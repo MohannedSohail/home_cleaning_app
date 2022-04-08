@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:home_cleaning_app/mytoast.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -7,6 +6,9 @@ import 'package:intl/intl.dart';
 import 'event.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class Calender extends StatefulWidget {
   const Calender({Key? key}) : super(key: key);
@@ -31,9 +33,20 @@ class _CalenderState extends State<Calender> {
   }
 
   final List _cleaningList = ["Upkeep Cleaning", "Initial Cleaning"];
+  var oclockformatte = DateFormat.jm();
+  var oclockformatter = DateFormat.j();
+
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+
+    ]);
+
+    var _selectedCleaningType;
+
     var height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
@@ -42,10 +55,7 @@ class _CalenderState extends State<Calender> {
 
     var date = DateTime.now();
     var formatter = DateFormat('dd MMMM yyyy');
-    var oclockformatter = DateFormat.j();
-    var oclockformatte = DateFormat.jm();
 
-    var _selectedCleaningType;
 
     String formattedDate = formatter.format(calendarSelectedDay);
 
@@ -54,11 +64,12 @@ class _CalenderState extends State<Calender> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: const Align(
+        title:  Align(
             alignment: Alignment.center,
             child: Text(
               "Cleaner Calendar",
-              style: TextStyle(fontWeight: FontWeight.bold),
+
+              style: GoogleFonts.ubuntu(textStyle:TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
             )),
       ),
       body: SafeArea(
@@ -97,12 +108,12 @@ class _CalenderState extends State<Calender> {
                 eventLoader: _getEventfromDay,
                 calendarFormat: CalendarFormat.week,
                 startingDayOfWeek: StartingDayOfWeek.sunday,
-                headerStyle: const HeaderStyle(
+                headerStyle:  HeaderStyle(
                   formatButtonVisible: false,
-                  titleTextStyle: TextStyle(
+                  titleTextStyle: GoogleFonts.ubuntu(textStyle:TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
-                  ),
+                    fontSize: 15,
+                  ), ) ,
                   titleCentered: true,
                   leftChevronIcon: Icon(
                     Icons.arrow_back_ios,
@@ -114,8 +125,8 @@ class _CalenderState extends State<Calender> {
                     color: Colors.white,
                     size: 15,
                   ),
-                  leftChevronMargin: EdgeInsets.only(left: 100),
-                  rightChevronMargin: EdgeInsets.only(right: 100),
+                  leftChevronMargin: EdgeInsets.only(left: 110),
+                  rightChevronMargin: EdgeInsets.only(right: 110),
                 ),
                 calendarStyle: CalendarStyle(
                   defaultTextStyle: const TextStyle(color: Colors.white),
@@ -158,14 +169,19 @@ class _CalenderState extends State<Calender> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 30.0, left: 15),
-                  child: SingleChildScrollView(
+                  child:selectedEvent.isEmpty? Center(
+                    child: Container(
+                      child: Text("There is no Event",style: GoogleFonts.antic(textStyle:TextStyle(color: Colors.grey,fontSize: 16),),),
+
+                    ),
+                  ) :SingleChildScrollView(
                     child: Column(
                       children: [
                         Row(
                           children: [
                             Text(
                               formattedDate,
-                              style: const TextStyle(color: Colors.grey),
+                              style: GoogleFonts.ubuntu(textStyle: TextStyle(color: Colors.grey), ),
                             )
                           ],
                         ),
@@ -180,183 +196,11 @@ class _CalenderState extends State<Calender> {
                           height: 25,
                         ),
 
-                        ..._getEventfromDay(calendarSelectedDay).map(
-                          (Event event) => Padding(
-                            padding: const EdgeInsets.only(top: 5.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(top: 8),
-                                      width: 40,
-                                      child: Text(
-                                        oclockformatter.format(event.time),
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 100,
-                                    ),
-                                    Container(
-                                      height: 0.5,
-                                      color: Colors.grey,
-                                      width: 33,
-                                    ),
-                                  ],
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(18),
-                                    margin: const EdgeInsets.only(
-                                        bottom: 20, left: 10),
-                                    color: const Color(0xffDFDEFF),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(event.name),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  event.cleaningType,
-                                                  style: const TextStyle(
-                                                    color: Colors.grey,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 13,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    // Icon(Icons.access_time,
-                                                    //     color: Color(0xff5C4DB1),),
 
-                                                    SvgPicture.asset(
-                                                        "assets/oclock.svg"),
-                                                    const SizedBox(
-                                                      width: 12,
-                                                    ),
-                                                    Text(
-                                                        oclockformatte.format(
-                                                                event.time) +
-                                                            "  -  " +
-                                                            TimeOfDay.fromDateTime(event
-                                                                    .time
-                                                                    .subtract(const Duration(
-                                                                        hours:
-                                                                            -1)))
-                                                                .format(
-                                                                    context),
-                                                        style: const TextStyle(
-                                                          color:
-                                                              Color(0xff5C4DB1),
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          fontSize: 12,
-                                                        )),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 13,
-                                                ),
-                                                Row(
-                                                  children: const [
-                                                    Text("Client Rating",
-                                                        style: TextStyle(
-                                                          color: Colors.grey,
-                                                        )),
-                                                    SizedBox(
-                                                      width: 15,
-                                                    ),
-                                                    Icon(Icons.star,
-                                                        color: Colors.black,
-                                                        size: 20),
-                                                    SizedBox(
-                                                      width: 3,
-                                                    ),
-                                                    Icon(Icons.star,
-                                                        color: Colors.black,
-                                                        size: 20),
-                                                    SizedBox(
-                                                      width: 3,
-                                                    ),
-                                                    Icon(Icons.star,
-                                                        color: Colors.black,
-                                                        size: 20),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            const Spacer(),
-                                            Image.asset(
-                                              "assets/personman.png",
-                                              width: 70,
-                                              height: 70,
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          height: 0.5,
-                                          color: Colors.grey,
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 5.0),
-                                          child: Row(
-                                            children: const [
-                                              Icon(Icons.phone_outlined,
-                                                  color: Color(0xff5C4DB1)),
-                                              SizedBox(
-                                                width: 30,
-                                              ),
-                                              Icon(Icons.mail_outline_outlined,
-                                                  color: Color(0xff5C4DB1)),
-                                              Spacer(),
-                                              Padding(
-                                                padding: EdgeInsets.only(
-                                                    right: 14.0),
-                                                child: Text(
-                                                  ("\$50"),
-                                                  style: TextStyle(
-                                                    color: Color(0xff5C4DB1),
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+
+                            ..._getEventfromDay(calendarSelectedDay).map(
+                          (Event event) =>  dayTaskItem(
+                              event.time, event.name, event.cleaningType),
                         ),
                       ],
                     ),
@@ -432,8 +276,8 @@ class _CalenderState extends State<Calender> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       scrollable: false,
-                      title: const Text("Add Event On Calendar",
-                          textAlign: TextAlign.center),
+                      title:  Text("Add Event On Calendar",
+                          textAlign: TextAlign.center,style: GoogleFonts.antic(textStyle: TextStyle(color: Colors.black))),
                       content: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -451,6 +295,7 @@ class _CalenderState extends State<Calender> {
                           const SizedBox(
                             height: 10,
                           ),
+
                           Container(
                             width: double.infinity,
                             child: Padding(
@@ -458,30 +303,30 @@ class _CalenderState extends State<Calender> {
                                   horizontal: 15.0, vertical: 5),
                               child: DropdownButtonHideUnderline(
                                   child: DropdownButton(
-                                isExpanded: true,
-                                borderRadius: BorderRadius.circular(15),
-                                icon: SvgPicture.asset(
-                                  "assets/calendar-4.svg",
-                                  height: 18,
-                                  width: 18,
-                                ),
-                                items: _cleaningList.map((cleaningType) {
-                                  return DropdownMenuItem(
-                                    alignment: AlignmentDirectional.center,
-                                    child: Text(
-                                      cleaningType,
+                                    isExpanded: true,
+                                    borderRadius: BorderRadius.circular(15),
+                                    icon: SvgPicture.asset(
+                                      "assets/calendar-4.svg",
+                                      height: 18,
+                                      width: 18,
                                     ),
-                                    value: cleaningType,
-                                  );
-                                }).toList(),
-                                value: _selectedCleaningType,
-                                hint: const Text("Select CleaningType "),
-                                onChanged: (value) {
-                                  setStatee(() {
-                                    _selectedCleaningType = value;
-                                  });
-                                },
-                              )),
+                                    items: _cleaningList.map((cleaningType) {
+                                      return DropdownMenuItem(
+                                        alignment: AlignmentDirectional.center,
+                                        child: Text(
+                                          cleaningType,
+                                        ),
+                                        value: cleaningType,
+                                      );
+                                    }).toList(),
+                                    value: _selectedCleaningType,
+                                    hint: const Text("Select CleaningType "),
+                                    onChanged: (value) {
+                                      setStatee(() {
+                                        _selectedCleaningType = value;
+                                      });
+                                    },
+                                  )),
                             ),
                             decoration: BoxDecoration(
 
@@ -492,8 +337,8 @@ class _CalenderState extends State<Calender> {
                                         style: BorderStyle.solid,
                                         width: 0.8),
                                     Border.all(
-                                        color: Colors.black38,
-                                        style: BorderStyle.solid,),
+                                      color: Colors.black38,
+                                      style: BorderStyle.solid,),
                                     0.1)),
                           ),
                         ],
@@ -513,22 +358,49 @@ class _CalenderState extends State<Calender> {
                                   _selectedCleaningType != null) {
                                 if (selectedEvent[calendarSelectedDay] !=
                                     null) {
-                                  Event event = Event(_nameController.text,
-                                      date, _selectedCleaningType);
-                                  selectedEvent[calendarSelectedDay]
-                                      ?.add(event);
-                                  Navigator.pop(context);
 
-                                  setState(() {});
+                                  print("isVisible ${!isVisible}");
+                                  print("isVisibleImage ${!isVisibleImage}");
 
-                                  ftoast.showToast(
-                                    child: checkshow(
-                                        "Added Event Successfully ",
-                                        Colors.greenAccent.withOpacity(0.7)),
-                                    gravity: ToastGravity.BOTTOM,
-                                    toastDuration: const Duration(seconds: 4),
-                                  );
+                                  if(isVisibleImage==true ){
+
+                                    setState(() {
+                                      _opacity = 1.0;
+                                      isVisibleImage=!isVisibleImage;
+                                      isVisible=!isVisible;
+                                    });
+                                  }
+
+                                    print("isVisible ${!isVisible}");
+                                    print("isVisibleImage ${!isVisibleImage}");
+                                    Event event = Event(_nameController.text,
+                                        date, _selectedCleaningType);
+                                    selectedEvent[calendarSelectedDay]
+                                        ?.add(event);
+                                    Navigator.pop(context);
+
+                                    setState(() {
+
+                                    });
+
+                                    ftoast.showToast(
+                                      child: trueCheckShow(
+                                          "Added Event Successfully ",
+                                          Colors.greenAccent.withOpacity(0.7)),
+                                      gravity: ToastGravity.BOTTOM,
+                                      toastDuration: const Duration(seconds: 4),
+                                    );
+
+
                                 } else {
+                                  if(isVisibleImage==true ){
+
+                                    setState(() {
+                                      _opacity = 1.0;
+                                      isVisibleImage=!isVisibleImage;
+                                      isVisible=!isVisible;
+                                    });
+                                  }
                                   selectedEvent[calendarSelectedDay] = [
                                     Event(_nameController.text, date,
                                         _selectedCleaningType)
@@ -538,7 +410,7 @@ class _CalenderState extends State<Calender> {
                                   setState(() {});
 
                                   ftoast.showToast(
-                                    child: checkshow(
+                                    child: trueCheckShow(
                                         "Added Event Successfully ",
                                         Colors.greenAccent.withOpacity(0.7)),
                                     gravity: ToastGravity.BOTTOM,
@@ -589,11 +461,194 @@ class _CalenderState extends State<Calender> {
             });
           }
         },
-        label: const Text("Add Event"),
+        label:  Text("Add Event",style: GoogleFonts.ubuntu()),
         icon: const Icon(
           Icons.add,
         ),
         backgroundColor: const Color(0xffFFBF67).withOpacity(0.9),
+      ),
+    );
+  }
+
+  // DropdownButtonHideUnderline buildDropdownButtonHideUnderline(StateSetter setStatee) {
+  //   return DropdownButtonHideUnderline(
+  //                                   child: DropdownButton(
+  //                                 isExpanded: true,
+  //                                 borderRadius: BorderRadius.circular(15),
+  //                                 icon: SvgPicture.asset(
+  //                                   "assets/calendar-4.svg",
+  //                                   height: 18,
+  //                                   width: 18,
+  //                                 ),
+  //                                 items: _cleaningList.map((cleaningType) {
+  //                                   return DropdownMenuItem(
+  //                                     alignment: AlignmentDirectional.center,
+  //                                     child: Text(
+  //                                       cleaningType,
+  //                                     ),
+  //                                     value: cleaningType,
+  //                                   );
+  //                                 }).toList(),
+  //                                 value: _selectedCleaningType,
+  //                                 hint: const Text("Select CleaningType "),
+  //                                 onChanged: (value) {
+  //                                   setStatee(() {
+  //                                     _selectedCleaningType = value;
+  //                                   });
+  //                                 },
+  //                               ));
+  // }
+
+  Padding dayTaskItem(DateTime time, String name, String cleaningType) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 5.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 8),
+                width: 35,
+                child: Text(
+                  oclockformatter.format(time),
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 100,
+              ),
+              Container(
+                height: 0.5,
+                color: Colors.grey,
+                width: 33,
+              ),
+            ],
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(18),
+              margin: const EdgeInsets.only(bottom: 20, left: 10),
+              color: const Color(0xffDFDEFF),
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(name,style: GoogleFonts.ubuntu(fontWeight: FontWeight.bold,color: Color(0xff5C4DB1),),),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            cleaningType,
+                            style: GoogleFonts.ubuntu(textStyle: TextStyle(
+                              color: Colors.grey,
+                            ),) ,
+                          ),
+                          const SizedBox(
+                            height: 13,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              // Icon(Icons.access_time,
+                              //     color: Color(0xff5C4DB1),),
+
+                              SvgPicture.asset("assets/oclock.svg"),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              Text(
+                                  oclockformatte.format(time) +
+                                      "  -  " +
+                                      TimeOfDay.fromDateTime(time.subtract(
+                                              const Duration(hours: -1)))
+                                          .format(context),
+                                  style: GoogleFonts.ubuntu(textStyle: TextStyle(
+                                    color: Color(0xff5C4DB1),
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 12,
+                                  ),) ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 13,
+                          ),
+                          Row(
+                            children:  [
+                              Text("Client Rating",
+                                  style: GoogleFonts.ubuntu(color: Colors.grey)),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Icon(Icons.star, color: Colors.black, size: 20),
+                              SizedBox(
+                                width: 3,
+                              ),
+                              Icon(Icons.star, color: Colors.black, size: 20),
+                              SizedBox(
+                                width: 3,
+                              ),
+                              Icon(Icons.star, color: Colors.black, size: 20),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Image.asset(
+                        "assets/personman.png",
+                        width: 70,
+                        height: 70,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 0.5,
+                    color: Colors.grey,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0),
+                    child: Row(
+                      children:  [
+                        Icon(Icons.phone_outlined, color: Color(0xff5C4DB1)),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Icon(Icons.mail_outline_outlined,
+                            color: Color(0xff5C4DB1)),
+                        Spacer(),
+                        Padding(
+                          padding: EdgeInsets.only(right: 14.0),
+                          child: Text(
+                            ("\$50"),
+                            style:  GoogleFonts.merienda(textStyle:TextStyle(
+                              color: Color(0xff5C4DB1),
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ), ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -622,123 +677,4 @@ class _CalenderState extends State<Calender> {
   //       ));
   // }
 
-  Row dayTask(String time, String name) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(20),
-          width: MediaQuery.of(context).size.width * 0.2,
-          child: Text(
-            time,
-            style: const TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w700,
-            ),
-            textAlign: TextAlign.right,
-          ),
-        ),
-        Expanded(
-          child: Container(
-            margin: const EdgeInsets.only(bottom: 20),
-            padding: const EdgeInsets.all(20),
-            color: const Color(0xffdfdeff),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: const TextStyle(
-                      color: Color(0xff5C4DB1), fontWeight: FontWeight.w700),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  'Upkeep Cleaning',
-                  style: TextStyle(
-                      color: Colors.grey, fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.timer,
-                      color: Color(0xff5C4DB1),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      "$time - 5 pm",
-                      style: const TextStyle(
-                          color: Color(0xff5C4DB1),
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  children: const [
-                    Text(
-                      "Client Rating",
-                      style: TextStyle(
-                          color: Colors.grey, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Icon(Icons.star),
-                    Icon(Icons.star),
-                    Icon(Icons.star),
-                  ],
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Container(
-                  height: 0.5,
-                  color: Colors.grey,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.call,
-                      color: Color(0xff5C4DB1),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    const Icon(
-                      Icons.mail_outline,
-                      color: Color(0xff5C4DB1),
-                    ),
-                    Expanded(
-                      child: Container(),
-                    ),
-                    const Text(
-                      "\$50",
-                      style: TextStyle(
-                          color: Color(0xff5C4DB1),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        )
-      ],
-    );
-  }
 }

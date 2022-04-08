@@ -29,7 +29,7 @@ Widget show(String text, Color mycolor) {
   );
 }
 
-Widget checkshow(String text, Color mycolor) {
+Widget trueCheckShow(String text, Color myColor) {
   return Container(
     margin: const EdgeInsets.only(bottom: 25),
     padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12.0),
@@ -46,7 +46,7 @@ Widget checkshow(String text, Color mycolor) {
           ),
           0.1),
       borderRadius: BorderRadius.circular(25.0),
-      color: mycolor,
+      color: myColor,
     ),
     child: Row(
       mainAxisSize: MainAxisSize.min,

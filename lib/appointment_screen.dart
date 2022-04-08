@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:home_cleaning_app/plancleaner.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class AppointmentScreen extends StatefulWidget {
   const AppointmentScreen({Key? key}) : super(key: key);
@@ -12,6 +15,12 @@ class AppointmentScreen extends StatefulWidget {
 class _AppointmentScreenState extends State<AppointmentScreen> {
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+
+    ]);
     return Scaffold(
       body: Column(
         children: [
@@ -31,7 +40,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
 
                   children: [
                     const SizedBox(height: 50,),
-                    const Text("Cleaning On Demand",textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
+                     Text("Cleaning On Demand",textAlign: TextAlign.center,style:GoogleFonts.ubuntu(textStyle:TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),) ,),
                     const SizedBox(height: 30,),
                     const Text("Book an appointment in\nless than 60 seconds and get on\n the schedule as early as\n tomorrow.",textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w500,),),
                     const Spacer(),
@@ -39,14 +48,14 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextButton(onPressed: (){}, child: const Text("Skip",style: TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.normal),)),
+                        TextButton(onPressed: (){}, child:  Text("Skip",style: GoogleFonts.nunito(textStyle: TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.normal),),)),
                         const Spacer(),
                         Row(
                           children: [
                             TextButton(onPressed: (){
                               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const MyPlanCleaner()));
 
-                            }, child: const Text("Next",style: TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.normal),)),
+                            }, child:  Text("Next",style: GoogleFonts.nunito(textStyle: TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.normal),),)),
                             Container(
                               height: 29,
                               width: 29,

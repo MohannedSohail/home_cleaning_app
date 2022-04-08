@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'appointment_screen.dart';
+import 'package:flutter/services.dart';
+
+
 
 class OnBordingScreen extends StatefulWidget {
   const OnBordingScreen({Key? key}) : super(key: key);
@@ -12,6 +15,12 @@ class OnBordingScreen extends StatefulWidget {
 class _OnBordingScreenState extends State<OnBordingScreen> {
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+
+    ]);
     return Scaffold(
       backgroundColor: const Color(0xff5c4db1),
       body: Center(
