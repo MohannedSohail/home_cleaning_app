@@ -169,9 +169,9 @@ class _CalenderState extends State<Calender> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 30.0, left: 15),
-                  child:selectedEvent.isEmpty? Center(
+                  child:_getEventfromDay(calendarSelectedDay).isEmpty? Center(
                     child: Container(
-                      child: Text("There is no Event",style: GoogleFonts.antic(textStyle:TextStyle(color: Colors.grey,fontSize: 16),),),
+                      child: Text("There is no Events",style: GoogleFonts.antic(textStyle:TextStyle(color: Colors.grey,fontSize: 16),),),
 
                     ),
                   ) :SingleChildScrollView(
