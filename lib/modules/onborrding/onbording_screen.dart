@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'appointment_screen.dart';
+import '../appointment/appointment_screen.dart';
 import 'package:flutter/services.dart';
 
 
@@ -51,7 +51,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                 height: 20,
               ),
               const Text(
-                  "Book Cleaners at the Comfort\n              of you home.",
+                  "Book Cleaners at the Comfort\n              of you onborrding.",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,

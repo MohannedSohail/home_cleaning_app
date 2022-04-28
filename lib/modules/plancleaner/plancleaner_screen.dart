@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'account_Screen2.dart';
-import 'account_screen.dart';
-import 'calender.dart';
+import 'package:home_cleaning_app/shared/components/components.dart';
+import '../account/account_Screen2.dart';
+import '../account/account_screen.dart';
+import '../calendar/calender_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 
@@ -169,7 +170,7 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                      top: 20.0, left: 30, bottom: 20),
+                      top: 20.0, left: 30, bottom: 25),
                   child: Row(children: [
                     buildExpandedCircleContainer(
                         "assets/png5.png", "Patio"),
@@ -179,7 +180,13 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
                         "assets/png3.png", "Small Blinds", "10")
                   ]),
                 ),
-                buildCustomButton(context),
+                // buildCustomButton(context),
+                defaultButton(function: (){
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (_) =>  Calender()));
+                }, txt: "Go To Calender Screen",radius: 10,),
+
+
               ],
             ),
           ),
@@ -217,16 +224,17 @@ class _MyPlanCleanerState extends State<MyPlanCleaner> {
 
   Container buildCustomButton(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 5),
+      width: double.infinity,
       decoration: BoxDecoration(
           color: const Color(0xff5C4DB1),
-          borderRadius: BorderRadius.circular(10)),
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))),
       child: MaterialButton(
         onPressed: () {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => const Calender()));
         },
-        child: const Text("Go To Calender Screen  ",
+        child:  Text("Go To Calender Screen  ",
+
             style: TextStyle(color: Colors.white)),
       ),
     );

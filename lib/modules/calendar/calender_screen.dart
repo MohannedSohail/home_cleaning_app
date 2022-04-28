@@ -1,14 +1,14 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:home_cleaning_app/mytoast.dart';
+import 'package:home_cleaning_app/shared/components/components.dart';
+import 'package:home_cleaning_app/shared/components/mytoast.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import 'event.dart';
+import '../../models/event/event_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 class Calender extends StatefulWidget {
   const Calender({Key? key}) : super(key: key);
@@ -36,13 +36,13 @@ class _CalenderState extends State<Calender> {
   var oclockformatte = DateFormat.jm();
   var oclockformatter = DateFormat.j();
 
+  var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
-
     ]);
 
     var _selectedCleaningType;
@@ -56,7 +56,6 @@ class _CalenderState extends State<Calender> {
     var date = DateTime.now();
     var formatter = DateFormat('dd MMMM yyyy');
 
-
     String formattedDate = formatter.format(calendarSelectedDay);
 
     return Scaffold(
@@ -64,12 +63,13 @@ class _CalenderState extends State<Calender> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title:  Align(
+        title: Align(
             alignment: Alignment.center,
             child: Text(
               "Cleaner Calendar",
-
-              style: GoogleFonts.ubuntu(textStyle:TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+              style: GoogleFonts.ubuntu(
+                textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
             )),
       ),
       body: SafeArea(
@@ -79,6 +79,7 @@ class _CalenderState extends State<Calender> {
               height: height / 2.0,
               color: const Color(0xff5C4DB1),
               child: TableCalendar(
+                // firstDay: DateTime.now(),
                 firstDay: DateTime.utc(2010, 10, 16),
                 lastDay: DateTime.utc(2030, 3, 14),
                 focusedDay: calendarFocusedDay,
@@ -108,12 +109,14 @@ class _CalenderState extends State<Calender> {
                 eventLoader: _getEventfromDay,
                 calendarFormat: CalendarFormat.week,
                 startingDayOfWeek: StartingDayOfWeek.sunday,
-                headerStyle:  HeaderStyle(
+                headerStyle: HeaderStyle(
                   formatButtonVisible: false,
-                  titleTextStyle: GoogleFonts.ubuntu(textStyle:TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                  ), ) ,
+                  titleTextStyle: GoogleFonts.ubuntu(
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                  ),
                   titleCentered: true,
                   leftChevronIcon: Icon(
                     Icons.arrow_back_ios,
@@ -169,42 +172,50 @@ class _CalenderState extends State<Calender> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 30.0, left: 15),
-                  child:_getEventfromDay(calendarSelectedDay).isEmpty? Center(
-                    child: Container(
-                      child: Text("There is no Events",style: GoogleFonts.antic(textStyle:TextStyle(color: Colors.grey,fontSize: 16),),),
-
-                    ),
-                  ) :SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Row(
+                  child: _getEventfromDay(calendarSelectedDay).isEmpty
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               formattedDate,
-                              style: GoogleFonts.ubuntu(textStyle: TextStyle(color: Colors.grey), ),
-                            )
+                              style: GoogleFonts.ubuntu(
+                                textStyle: TextStyle(color: Colors.grey),
+                              ),
+                            ),
+                            Container(
+                              child: Text(
+                                "There is no Events",
+                                style: GoogleFonts.antic(
+                                  textStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 16),
+                                ),
+                              ),
+                            ),
                           ],
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    formattedDate,
+                                    style: GoogleFonts.ubuntu(
+                                      textStyle: TextStyle(color: Colors.grey),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 25,
+                              ),
+                              ..._getEventfromDay(calendarSelectedDay).map(
+                                (Event event) => dayTaskItem(
+                                    event.time, event.name, event.cleaningType),
+                              ),
+                            ],
+                          ),
                         ),
-                        // Align(
-                        //   alignment: Alignment.topLeft,
-                        //   child: Text(
-                        //     "18 April 2020",
-                        //     style: TextStyle(color: Colors.grey),
-                        //   ),
-                        // ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-
-
-
-                            ..._getEventfromDay(calendarSelectedDay).map(
-                          (Event event) =>  dayTaskItem(
-                              event.time, event.name, event.cleaningType),
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
               ),
             ),
@@ -276,26 +287,48 @@ class _CalenderState extends State<Calender> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       scrollable: false,
-                      title:  Text("Add Event On Calendar",
-                          textAlign: TextAlign.center,style: GoogleFonts.antic(textStyle: TextStyle(color: Colors.black))),
+                      title: Text("Add Event On Calendar",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.antic(
+                              textStyle: TextStyle(color: Colors.black))),
                       content: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          TextFormField(
-                            controller: _nameController,
-                            keyboardType: TextInputType.name,
-                            decoration: InputDecoration(
-                                labelText: "Enter Your Name",
-                                prefixIcon: const Icon(Icons.person,
-                                    color: Color(0xff5C4DB1)),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                )),
+                          Form(
+                            key: formKey,
+                            child: defaultTextFormField(
+
+                                controller: _nameController,
+                                type: TextInputType.name,
+                                validator: (value) {
+                                  if(value.toString().isEmpty){
+                                 return "Name Must Not Be Empty";
+
+                                  }
+                                },
+                                labelTxt: "Enter Your Name",
+                                prefixIcon: Icons.person),
+                            // child: TextFormField(
+                            //   controller: _nameController,
+                            //   keyboardType: TextInputType.name,
+                            //   validator: (value){
+                            //     if(value.toString().isEmpty){
+                            //           return "Name Must Not Be Empty";
+                            //     }
+                            //     return "";
+                            //   },
+                            //   decoration: InputDecoration(
+                            //       labelText: "Enter Your Name",
+                            //       prefixIcon: const Icon(Icons.person,
+                            //           color: Color(0xff5C4DB1)),
+                            //       border: OutlineInputBorder(
+                            //         borderRadius: BorderRadius.circular(8),
+                            //       )),
+                            // ),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-
                           Container(
                             width: double.infinity,
                             child: Padding(
@@ -303,33 +336,32 @@ class _CalenderState extends State<Calender> {
                                   horizontal: 15.0, vertical: 5),
                               child: DropdownButtonHideUnderline(
                                   child: DropdownButton(
-                                    isExpanded: true,
-                                    borderRadius: BorderRadius.circular(15),
-                                    icon: SvgPicture.asset(
-                                      "assets/calendar-4.svg",
-                                      height: 18,
-                                      width: 18,
+                                isExpanded: true,
+                                borderRadius: BorderRadius.circular(15),
+                                icon: SvgPicture.asset(
+                                  "assets/calendar-4.svg",
+                                  height: 18,
+                                  width: 18,
+                                ),
+                                items: _cleaningList.map((cleaningType) {
+                                  return DropdownMenuItem(
+                                    alignment: AlignmentDirectional.center,
+                                    child: Text(
+                                      cleaningType,
                                     ),
-                                    items: _cleaningList.map((cleaningType) {
-                                      return DropdownMenuItem(
-                                        alignment: AlignmentDirectional.center,
-                                        child: Text(
-                                          cleaningType,
-                                        ),
-                                        value: cleaningType,
-                                      );
-                                    }).toList(),
-                                    value: _selectedCleaningType,
-                                    hint: const Text("Select CleaningType "),
-                                    onChanged: (value) {
-                                      setStatee(() {
-                                        _selectedCleaningType = value;
-                                      });
-                                    },
-                                  )),
+                                    value: cleaningType,
+                                  );
+                                }).toList(),
+                                value: _selectedCleaningType,
+                                hint: const Text("Select CleaningType "),
+                                onChanged: (value) {
+                                  setStatee(() {
+                                    _selectedCleaningType = value;
+                                  });
+                                },
+                              )),
                             ),
                             decoration: BoxDecoration(
-
                                 borderRadius: BorderRadius.circular(8),
                                 border: BoxBorder.lerp(
                                     Border.all(
@@ -338,7 +370,8 @@ class _CalenderState extends State<Calender> {
                                         width: 0.8),
                                     Border.all(
                                       color: Colors.black38,
-                                      style: BorderStyle.solid,),
+                                      style: BorderStyle.solid,
+                                    ),
                                     0.1)),
                           ),
                         ],
@@ -358,47 +391,40 @@ class _CalenderState extends State<Calender> {
                                   _selectedCleaningType != null) {
                                 if (selectedEvent[calendarSelectedDay] !=
                                     null) {
-
                                   print("isVisible ${!isVisible}");
                                   print("isVisibleImage ${!isVisibleImage}");
 
-                                  if(isVisibleImage==true ){
-
+                                  if (isVisibleImage == true) {
                                     setState(() {
                                       _opacity = 1.0;
-                                      isVisibleImage=!isVisibleImage;
-                                      isVisible=!isVisible;
+                                      isVisibleImage = !isVisibleImage;
+                                      isVisible = !isVisible;
                                     });
                                   }
 
-                                    print("isVisible ${!isVisible}");
-                                    print("isVisibleImage ${!isVisibleImage}");
-                                    Event event = Event(_nameController.text,
-                                        date, _selectedCleaningType);
-                                    selectedEvent[calendarSelectedDay]
-                                        ?.add(event);
-                                    Navigator.pop(context);
+                                  print("isVisible ${!isVisible}");
+                                  print("isVisibleImage ${!isVisibleImage}");
+                                  Event event = Event(_nameController.text,
+                                      date, _selectedCleaningType);
+                                  selectedEvent[calendarSelectedDay]
+                                      ?.add(event);
+                                  Navigator.pop(context);
 
-                                    setState(() {
+                                  setState(() {});
 
-                                    });
-
-                                    ftoast.showToast(
-                                      child: trueCheckShow(
-                                          "Added Event Successfully ",
-                                          Colors.greenAccent.withOpacity(0.7)),
-                                      gravity: ToastGravity.BOTTOM,
-                                      toastDuration: const Duration(seconds: 4),
-                                    );
-
-
+                                  ftoast.showToast(
+                                    child: trueCheckShow(
+                                        "Added Event Successfully ",
+                                        Colors.greenAccent.withOpacity(0.7)),
+                                    gravity: ToastGravity.BOTTOM,
+                                    toastDuration: const Duration(seconds: 4),
+                                  );
                                 } else {
-                                  if(isVisibleImage==true ){
-
+                                  if (isVisibleImage == true) {
                                     setState(() {
                                       _opacity = 1.0;
-                                      isVisibleImage=!isVisibleImage;
-                                      isVisible=!isVisible;
+                                      isVisibleImage = !isVisibleImage;
+                                      isVisible = !isVisible;
                                     });
                                   }
                                   selectedEvent[calendarSelectedDay] = [
@@ -461,7 +487,7 @@ class _CalenderState extends State<Calender> {
             });
           }
         },
-        label:  Text("Add Event",style: GoogleFonts.ubuntu()),
+        label: Text("Add Event", style: GoogleFonts.ubuntu()),
         icon: const Icon(
           Icons.add,
         ),
@@ -469,35 +495,6 @@ class _CalenderState extends State<Calender> {
       ),
     );
   }
-
-  // DropdownButtonHideUnderline buildDropdownButtonHideUnderline(StateSetter setStatee) {
-  //   return DropdownButtonHideUnderline(
-  //                                   child: DropdownButton(
-  //                                 isExpanded: true,
-  //                                 borderRadius: BorderRadius.circular(15),
-  //                                 icon: SvgPicture.asset(
-  //                                   "assets/calendar-4.svg",
-  //                                   height: 18,
-  //                                   width: 18,
-  //                                 ),
-  //                                 items: _cleaningList.map((cleaningType) {
-  //                                   return DropdownMenuItem(
-  //                                     alignment: AlignmentDirectional.center,
-  //                                     child: Text(
-  //                                       cleaningType,
-  //                                     ),
-  //                                     value: cleaningType,
-  //                                   );
-  //                                 }).toList(),
-  //                                 value: _selectedCleaningType,
-  //                                 hint: const Text("Select CleaningType "),
-  //                                 onChanged: (value) {
-  //                                   setStatee(() {
-  //                                     _selectedCleaningType = value;
-  //                                   });
-  //                                 },
-  //                               ));
-  // }
 
   Padding dayTaskItem(DateTime time, String name, String cleaningType) {
     return Padding(
@@ -541,15 +538,23 @@ class _CalenderState extends State<Calender> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(name,style: GoogleFonts.ubuntu(fontWeight: FontWeight.bold,color: Color(0xff5C4DB1),),),
+                          Text(
+                            name,
+                            style: GoogleFonts.ubuntu(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff5C4DB1),
+                            ),
+                          ),
                           const SizedBox(
                             height: 10,
                           ),
                           Text(
                             cleaningType,
-                            style: GoogleFonts.ubuntu(textStyle: TextStyle(
-                              color: Colors.grey,
-                            ),) ,
+                            style: GoogleFonts.ubuntu(
+                              textStyle: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
                           ),
                           const SizedBox(
                             height: 13,
@@ -571,20 +576,23 @@ class _CalenderState extends State<Calender> {
                                       TimeOfDay.fromDateTime(time.subtract(
                                               const Duration(hours: -1)))
                                           .format(context),
-                                  style: GoogleFonts.ubuntu(textStyle: TextStyle(
-                                    color: Color(0xff5C4DB1),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12,
-                                  ),) ),
+                                  style: GoogleFonts.ubuntu(
+                                    textStyle: TextStyle(
+                                      color: Color(0xff5C4DB1),
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 12,
+                                    ),
+                                  )),
                             ],
                           ),
                           const SizedBox(
                             height: 13,
                           ),
                           Row(
-                            children:  [
+                            children: [
                               Text("Client Rating",
-                                  style: GoogleFonts.ubuntu(color: Colors.grey)),
+                                  style:
+                                      GoogleFonts.ubuntu(color: Colors.grey)),
                               SizedBox(
                                 width: 15,
                               ),
@@ -622,7 +630,7 @@ class _CalenderState extends State<Calender> {
                   Padding(
                     padding: const EdgeInsets.only(top: 5.0),
                     child: Row(
-                      children:  [
+                      children: [
                         Icon(Icons.phone_outlined, color: Color(0xff5C4DB1)),
                         SizedBox(
                           width: 30,
@@ -634,11 +642,13 @@ class _CalenderState extends State<Calender> {
                           padding: EdgeInsets.only(right: 14.0),
                           child: Text(
                             ("\$50"),
-                            style:  GoogleFonts.merienda(textStyle:TextStyle(
-                              color: Color(0xff5C4DB1),
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ), ),
+                            style: GoogleFonts.merienda(
+                              textStyle: TextStyle(
+                                color: Color(0xff5C4DB1),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -652,29 +662,4 @@ class _CalenderState extends State<Calender> {
       ),
     );
   }
-
-  // DropdownButtonHideUnderline buildDropdownButton() {
-  //   return DropdownButtonHideUnderline(
-  //       child: DropdownButton(
-  //         isExpanded: true,
-  //         borderRadius: BorderRadius.circular(15),
-  //         items: _cleaningList.map((country) {
-  //           return DropdownMenuItem(
-  //             alignment: AlignmentDirectional.center,
-  //             child: Text(
-  //               country,
-  //             ),
-  //             value: country,
-  //           );
-  //         }).toList(),
-  //         value: _selectedCleaningType,
-  //         hint: Text("Select You Country "),
-  //         onChanged: (value){
-  //           setState(() {
-  //             _selectedCleaningType=value;
-  //           });
-  //         },
-  //       ));
-  // }
-
 }

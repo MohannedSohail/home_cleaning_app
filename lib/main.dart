@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'account_screen.dart';
-import 'appointment_screen.dart';
-import 'calender.dart';
-import 'onbordingscreen.dart';
-import 'plancleaner.dart';
+import 'modules/account/account_screen.dart';
+import 'modules/appointment/appointment_screen.dart';
+import 'modules/calendar/calender_screen.dart';
+import 'modules/onborrding/onbording_screen.dart';
+import 'modules/plancleaner/plancleaner_screen.dart';
 
 void main() {
   runApp(const MyApp());

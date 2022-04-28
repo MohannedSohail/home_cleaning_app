@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:home_cleaning_app/plancleaner.dart';
+import 'package:home_cleaning_app/modules/plancleaner/plancleaner_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -53,7 +53,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                         Row(
                           children: [
                             TextButton(onPressed: (){
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const MyPlanCleaner()));
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) =>  MyPlanCleaner()));
 
                             }, child:  Text("Next",style: GoogleFonts.nunito(textStyle: TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.normal),),)),
                             Container(
